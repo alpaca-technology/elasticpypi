@@ -28,5 +28,8 @@
   "bugs": {
     "url": "https://github.com/khornberg/elasticpypi/issues"
   },
-  "homepage": "https://github.com/khornberg/elasticpypi#readme"
+  "homepage": "https://github.com/khornberg/elasticpypi#readme",
+  "dependencies": {
+    "serverless-domain-manager": "^3.3.0"
+  }
 }

@@ -4,23 +4,23 @@ provider:
   name: aws
   runtime: python3.7
   memorySize: 128
-  stage: dev
-  # profile: 'some-local-aws-config-profile'
-  # region: us-east-1
+  stage: production
+  region: us-east-1
 
   environment:
     SERVICE: ${self:service}
     STAGE: '/${self:provider.stage}'
-    BUCKET: ${opt:bucket, 'elasticpypi'}             # CHANGE ME
-    TABLE: ${opt:table, 'elasticpypi'}
-    USERNAME: ${opt:username, 'elasticpypi'}
-    PASSWORD: ${opt:password, 'something-secretive'}   # CHANGE ME
+    BUCKET: ${opt:bucket, 'alpaca-ypi'}
+    TABLE: ${opt:table, 'alpaca-pypi'}
+    USERNAME: ${opt:username, 'alpaca-pypi'}
+    PASSWORD: ${opt:password, 'something-secretive'}
     OVERWRITE: false
 
 plugins:
   - serverless-wsgi
   - serverless-apigw-binary
   - serverless-python-requirements
+  - serverless-domain-manager
 
 package:
   exclude:
@@ -83,6 +83,12 @@ custom:
       - 'application/x-bzip'
       - 'application/zip'
       - 'application/x-gzip'
+  customDomain:
+    domainName: pypi.alpaca.technology
+    basePath: ''
+    stage: ${self:provider.stage}
+    createRoute53Record: true
+    certificateName: arn:aws:acm:us-east-1:671505321390:certificate/df4fce2e-9da1-4a37-99da-d84cd9c890d6
 
 resources:
   Resources:
